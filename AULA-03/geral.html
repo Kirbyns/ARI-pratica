@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+function desenhar(){
+            var figura = document.querySelector("#minhaTelaa");
+            if(figura.getContext){
+
+                // se existtir vamos criar um circulo
+                
+                var circulo1 = figura.getContext("2d"); 
+                var linha = figura.getContext("2d"); 
+                var retangulo = figura.getContext("2d");
+
+                function animarCirculo(tempo){
+                    circulo1.clearRect(0,0,figura.width,figura.height);
+
+                    retangulo.fillStyle = "blue";
+                    retangulo.fillRect(50,50,400,200);
+
+                    linha.linewidth = 5;
+                    linha.strokeStyle = "red";
+                    linha.moveTo(100,200);
+                    linha.lineTo(170,100);
+                    linha.lineTo(240,300);
+                    linha.stroke();
+
+                    circulo1.fillStyle = "yellow";
+                    circulo1.beginPath();
+                    circulo1.arc(200, 200, 50 +25 * Math.sin(tempo/1000), 0, 2 * Math.PI);
+                    circulo1.fill();
+                    circulo1.linewidth - 2;
+                    circulo1.strokeStyle = "aqua";
+                    circulo1.stroke();
+
+                    requestAnimationFrame(animarCirculo);
+                }
+                requestAnimationFrame(animarCirculo);
+            }
+        }
+        window.onload = desenhar;
+    </script>
+    <style>
+        #minhaTelaa {
+    
+          border: 2px solid #000;
+        }
+          
+      </style>
+</head>
+<body>
+    <canvas id="minhaTelaa"  height="500" width="600"></canvas>
+    
+</body>
+</html>

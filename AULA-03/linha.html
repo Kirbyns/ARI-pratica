@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+  function desenhar(){
+            var figura = document.querySelector("#minhaTelaa");
+            if(figura.getContext){
+
+                // se existtir vamos criar um retangulo
+                
+                var linha = figura.getContext("2d"); 
+                linha.lineWidth = 5;
+                linha.strokeStyle = "blue";
+                linha.moveTo(300, 200); //inicio da linha
+                linha.lineTo(330, 100);
+                linha.lineTo(360, 200);
+                linha.lineTo(480, 260);
+                linha.lineTo(360, 300);
+                linha.lineTo(330, 400);
+                linha.lineTo(300, 300);
+                linha.lineTo(170, 260);
+                linha.lineTo(300, 200);
+        
+
+                
+
+                linha.stroke(); //finaliza a linha
+                
+            }
+        }
+        window.onload = desenhar;
+        
+    </script>
+
+<style>
+    #minhaTelaa {
+
+      border: 2px solid #000;
+    }
+      
+  </style>
+</head>
+<body>
+
+    <canvas id="minhaTelaa"  height="500" width="600">
+    
+</body>
+</html>

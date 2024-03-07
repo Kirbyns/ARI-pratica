@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script>
+        //criar função
+        function desenhar(){
+            var figura = document.querySelector("#minhaTela");
+            if(figura.getContext){
+
+                // se existtir vamos criar um retangulo
+                
+                var retangulo = figura.getContext("2d");
+                retangulo.fillStyle = "blue";
+                retangulo.fillRect(50,50,200,300); //(x,y,width, height)
+
+                var quadrado = figura.getContext("2d");
+                quadrado.fillStyle ="orange";
+                quadrado.fillRect(300,170,200,300); 
+            }
+        }
+        window.onload = desenhar;
+    </script>
+     <style>
+      #minhaTela {
+
+        border: 2px solid #000;
+      }
+        
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="minhaTela"  height="500" width="600">
+
+
+    </canvas>
+    
+</body>
+</html>

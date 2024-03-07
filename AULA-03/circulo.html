@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+function desenhar(){
+            var figura = document.querySelector("#minhaTelaa");
+            if(figura.getContext){
+
+                // se existtir vamos criar um circulo
+                
+                var circulo1 = figura.getContext("2d"); 
+                //definir a cor do preenchimento
+                circulo1.fillStyle = "green";
+
+                circulo1.beginPath();
+                circulo1.arc(200,200,70, 0, 1 * Math.PI);
+                circulo1.fill();
+            }
+        }
+        window.onload = desenhar;
+    </script>
+    <style>
+        #minhaTelaa {
+    
+          border: 2px solid #000;
+        }
+          
+      </style>
+</head>
+<body>
+    <canvas id="minhaTelaa"  height="500" width="600"></canvas>
+    
+</body>
+</html>
