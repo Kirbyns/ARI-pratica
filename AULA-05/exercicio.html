@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and drop</title>
+    <style>
+        #pai{
+            display: flex;
+        }
+        #mae1,#mae2,#mae3 {
+            display:inline-flex;
+            background-color: aqua;
+        }
+        
+        #div1{
+            width:360px;
+            height: 75px;
+            border: 1px solid black;
+            margin-right: 10px;
+            
+           
+        }
+        #div2{
+            width:360px;
+            height: 75px;
+            border: 1px solid red;
+            margin-right: 10px;
+            
+        }
+        #div3{
+            width:360px;
+            height: 75px;
+            border: 1px solid green;
+            margin-right: 10px;
+            
+        }
+        #div4{
+            width:360px;
+            height: 75px;
+            border: 1px solid yellow;
+            margin-right: 10px;
+            
+        }
+        #drag1{
+            text-align: center;
+        }
+    </style>
+    <script>
+
+        //criando função que é chamada quando se inicia o arrasto do elemento
+
+        function drag(ev){
+            ev.dataTransfer.setData("text",ev.target.id);
+        }
+
+        function allowDrop(ev){
+            ev.preventDefault();
+
+        }
+        function drop(ev){
+            ev.preventDefault(ev);
+            let data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+    </script>
+</head>
+<body>
+    
+    <br>
+    <br>
+    
+    <div id="pai"></div>
+        <div id="mae1">
+            <div id="div1" ondragover="allowDrop(event)" ondrop="drop(event)">
+                <!--<img id="drag1" src="paisagem.jpg" alt="" draggable="true" ondragstart="drag(event)" width="350" height="70"> comentado a imagem -->
+                <h2 id="drag1" draggable="true" ondragstart="drag(event)" >TEXTO</h2>
+            </div>
+            <br>
+            <div id="div2" ondragover="allowDrop(event)" ondrop="drop(event)"> </div>
+            <br>
+            <div id="div3" ondragover="allowDrop(event)" ondrop="drop(event)"> </div>
+            <br>
+    
+            
+        </div>
+        <div id="mae2">
+            <div id="div1" ondragover="allowDrop(event)" ondrop="drop(event)">
+              
+            </div>
+            <br>
+            <div id="div2" ondragover="allowDrop(event)" ondrop="drop(event)"> </div>
+            <br>
+            <div id="div3" ondragover="allowDrop(event)" ondrop="drop(event)"> </div>
+            <br>
+
+        </div>
+        <div id="mae3">
+            <div id="div1" ondragover="allowDrop(event)" ondrop="drop(event)">
+              
+            </div>
+            <br>
+            <div id="div2" ondragover="allowDrop(event)" ondrop="drop(event)"> </div>
+            <br>
+            <div id="div3" ondragover="allowDrop(event)" ondrop="drop(event)"> </div>
+            <br>
+
+
+        </div>
+    </div>
+    
+</body>
+</html>
