@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Carrinho de Compras</title>
+</head>
+<body class="container">
+    <h2 class="mt-5">Prateleira de produtos</h1>
+    <div id="prateleira" class="border border-2 p-3 rounded-pill" ondragover="allowDrop(event)" ondrop="drop(event, 'prateleira')">
+    
+    </div>
+
+    <h2>Carrinho de Compras</h2>
+    <div id="carrinho" class="border border-2 p-3 rounded-pill" ondragover="allowDrop(event)" ondrop="drop(event,'carrinho')">
+    
+    </div>
+
+    <p class="fw-medium fs-5">Total da compra: R$<span class="totalCompra">0</span></p>
+
+    <script>
+        const produtos = [
+                {
+                    id:'1',
+                    nome:'Produto 1',
+                    preco: 10
+                },
+                {
+                    id:'2',
+                    nome:'Produto 2',
+                    preco: 20
+                },
+                {
+                    id:'3',
+                    nome:'Produto 3',
+                    preco: 30
+                },
+
+        ];
+        let carrinho ={};
+
+        //vamos criar uma função que configura os elementos de produtos para serem arrastaveis em uma funcionalidade de drag and drop.
+        function iniciar(){
+            let prateleiraEl = document.getElementById('prateleira'); // Declaração de prateleiraEl
+
+            for(let i =0; i< produtos.length; i++){
+
+                //vamos declarar uma variavel produto
+                let produto = produto[i];
+
+                //vamos criar um novo elemento html e armazenar uma referencia a ele na variavel divProduto
+                let divProduto = document.createElement('div');
+
+                //vamos definir um texto interno do divProduto com nome e o preço do produto
+                divProduto.innerText = produto.nome + " - R$"+produto.preco
+
+                //vamos adicionar o atributo draggable ao elemento divProduto e definir seu valor como "true"
+                divProduto.setAttribute('draggable','true');
+                divProduto.setAttribute('id', produto.id);
+
+                //adicionamos a classe CSS produto ao elemento divProduto. Isso pode ser utilizado para estilizar esse elemento
+                divProduto.classList.add('card m-3')
+
+                //registrando um ouvinte de eventos dragstart no divProduto
+                divProduto.addEventListener('dragstart', function(e){
+                    e.dataTransfer.setData('text', produto.id);
+                });
+
+                //adicionar o divProduto ao elemento prateleiraEl, que é o conteiner na pagina web onde o produto será apresentado
+                prateleiraEl.appendChild(divProduto);
+
+            }
+        }
+
+        function allowDrop(event){
+            event.preventDefault();
+        }
+
+        function drop(event,targetId){
+            event.preventDefault();
+
+            //obter o id do produto que está sendo arrastado a partir dos dados do evento
+
+            const produtoId = event.dataTransfer.getData('text');
+            const produto = produto.find(function(p){
+                return p.id === produtoId
+            });
+
+          //verificar se o alvo da operação é a prateleira ou o carrinho
+            if(targetId ==='carrinho'){
+                //se o produto não existir no carrinho, criamos uma nova entrada para ele
+                if(!carrinho[produtoId]){
+                    carrinho[produtoId] = {
+                        id: produto.id,
+                        nome: produto.nome,
+                        preco: produto.preco,
+                        quantidade: 0
+                    };
+                }
+                //incrementa a quantidade no carrinho por 1 
+                carrinho[produtoId].qantidade++;
+            }else if(targetId ==='prateleira' && carrinho[produtoId]&& carrinho[produtoId].quantidade >0) {
+
+                //drecrementar a quantidade desse produto no carrinho
+
+                carrinho[produtoId].quantidade--;
+                //se a quantidade do produto no carrinho chegar a 0, deve ser removido o produto do carrinho
+                if(carrinho[produtoId].quantidade === 0) delete carrinho[produtoId];
+
+                //chamamos a função para atualizar a visualização do carrinho na página
+
+                atualizarCarrinho();
+            }
+        }
+
+        function atualizarCarrinho(){
+
+            //obter o elemento do DOM que representa o carrinho de compras 
+
+            const carrinhoEl = document.getElementById('carrinho')
+
+            //obter o elemento do DOM aonde o total da compra será exibido
+            const totalCompraEl = document.querySelector('.totalCompra')
+
+            //inicializar a variavel que manterá a soma total dos produtos no carrinho
+
+            let total = 0;
+
+            //definimos o conteudo inicial do carrinho para indicar os produtos que devem ser arrastados
+
+            carrinhoEl.innerHTML = '<p> Arraste os produtos aqui </p>';
+
+            //interamos sobre cada produto no objeto carrinho
+
+            for(var produtoId in carrinho){
+                //funcção de fechamento para caputar o estado atual do produto na interação
+                (function(produto){
+
+                    let id = produto.id, nome = produto.nome, preco = produto.preco, quantidade = produto.quantidade;
+
+                    if(quantidade > 0){
+                        //criar um novo elemento div para exibir informações do produto
+
+                        let itemEl = document.createElement('div')
+
+                        //adiciona a classe para estilização do produto no carrinho
+
+                        itemEl.classList.add('card m-3');
+
+                        //definimos o texto do elemento com nome, preço uantidade do produto 
+                        itemEl.innerText = nome +" - "+"R$"+preco+" x "+quantidade;
+                        
+                        //tornamos o elemento arrastavel
+
+                        item.El.setAttribute('draggable','true');
+                        //adicionamos um ouvinte de evento para quando o produto começar a ser arrastado
+
+                        itemEl.addEventListener('dragstart', function(e){
+                            //definir o dado a ser transferido no arrasto, que nesse caso é o id do produto
+                            e.dataTransfer.setData('text', id)
+                        });
+                        // adiciona o elemento produto como filho do carrinho
+                        carrinhoEl.appendChild(itemEl);
+                        //atualiza o total somando o preço com a quantidade do produto
+
+                        total += preco*quantidade;
+                    }}
+                    );
+                    (carrinho[produtoId]); //passa o produto atual como argumento para a função de fechamento
+
+                    
+                    //atualizamos o texto do elemento que exibe o total da compra com o valor total formatado
+
+                    totalCompraEl.textContent = total.toFixed(2);
+
+            
+                }
+
+    
+            
+            
+
+            
+                
+        }
+            iniciar();
+
+    </script>
+    
+</body>
+</html>
