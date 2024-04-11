@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br  ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        #fconf{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            border: 1px solid #000;
+            background-color: #735def;
+            padding: 20px;
+            display: none; /* oculta o form ou seja, ele só vai aparecer quando clicar no botão Opções */
+        }
+
+    </style>
+
+    <script>
+
+        var vcorfundo, vcortexto, vnome ;
+
+         /* function inicia(){ //se esse if for verdadeiro siginifica que temos dados dentro do local storage (nome)
+            if(localStorage.nome){
+                vcorfundo = localStorage.corfundo
+                vcortexto = localStorage.cortexto
+                vnome = localStorage.nome
+                defineCor(1,vcorfundo)
+                defineCor(2,vcortexto)
+
+                document.getElementById("painel").innerHTML = "Bem vindo " + vnome + "<hr>"
+                } 
+        
+            }   */
+
+            function carregarPreferencias(){
+                vnome = document.getElementById("inputNome").value;
+
+                if(localStorage.getItem(vnome + "_nome")){
+                    vcorfundo = localStorage.getItem(vnome+"+_corfundo");
+                    vcortexto = localStorage.getItem(vnome+"+_cortexto");
+
+                    defineCor(1,vcorfundo);
+                    defineCor(2,vcortexto);
+
+                    document.getElementById("painel").innerHTML = "Bem vindo "+ vnome + "<hr>";
+                    document.getElementById("nomeDialog").style.display = "none";
+                } else{
+                    alert("perfil não encontrado!");
+                }
+            }
+
+        function defineCor(op,cor){
+            //se o OP for igual a 1 altera a cor do fundo se for igual a 2 altera a cor do texto
+
+            if(op==1){
+                document.body.style.backgroundColor=cor
+                vcorfundo = cor; 
+            }else{
+                document.body.style.color=cor
+                vcortexto =cor;
+            }
+        }
+        
+        function gravar(){
+            var form = document.getElementById("fconf")
+                //armazenamos o nome entrando no formulário na variavel vnome
+                vnome = document.getElementById("fnome").value ;
+
+                // armazena as informações no localStorage
+
+                localStorage.setItem(vnome+"_corfundo",vcorfundo); 
+                localStorage.setItem(vnome+"_cortexto",vcortexto); 
+                localStorage.setItem(vnome+"_nome",vnome); 
+                
+                form.style.display="none";
+
+            }
+
+            function mostrarOpcoes(){
+                var form = document.getElementById("fconf")
+                form.style.display ="block"
+            }
+           // window.addEventListener("load", inicia); pertence a função inicia
+
+        
+
+    </script>
+</head>
+<body>
+    <div id="nomeDialog">
+        <label for="">Informe seu nome : </label>
+        <input type="text" name="" id="inputNome">
+        <button onclick="carregarPreferencias()">Carregar preferências</button>
+
+    </div>
+    <p>Exemplo de WebStorage</p>
+    <p id="painel"></p>
+    <button onclick="mostrarOpcoes()">Opções</button>
+    <form name="fconf" id="fconf">
+
+
+        <label for="">Nome:</label><br>
+        <input type="text" name="fnome" id="fnome" size="20"><br><br>
+
+        <label for="">Cor de Fundo: </label><br>
+        <input type="radio" name="fcorF" onclick="defineCor(1,'#f00')">Vermelho <br>
+        <input type="radio" name="fcorF" onclick="defineCor(1,'#0f0')">Verde <br>
+        <input type="radio" name="fcorF" onclick="defineCor(1,'#00f')">Azul <br>
+
+        <label for="">Cor Texto</label><br><br>
+        <input type="radio" name="fcorT" onclick="defineCor(2,'#000')">Preto <br>
+        <input type="radio" name="fcorT" onclick="defineCor(2,'#fff')">Branco <br>
+        <input type="radio" name="fcorT" onclick="defineCor(2,'#ff0')">Amarelo <br>
+
+        <input type="button" value="Gravar" onclick="gravar()"><br>
+
+
+    </form>
+</body>
+</html>
